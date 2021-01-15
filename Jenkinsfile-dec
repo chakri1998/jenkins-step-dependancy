@@ -1,0 +1,134 @@
+def stageIf(String name, Closure body) {
+if (params.specificStage == name || params.firstStage <= name && params.lastStage >= name) {
+    stage(name, body)
+} else {
+    stage(name) {
+        echo "Stage skipped: $name"
+    }
+}
+}
+
+pipeline {
+    agent any
+       stages{ 
+           stage('Setup parameters') {
+            steps {
+                script { 
+properties([
+        parameters([
+            choiceParam(
+                        name: 'specificStage',
+                        choices: 
+                                '2.Docker\n' +
+                                '1.Build\n' +
+                                '3.Deploy\n' +
+                                '4.Deploy\n' +
+                                '5.Deploy\n' +
+                                '6.Deploy\n' +
+                                '7.Deploy\n' + 
+                                '8.Deploy\n', 
+                        description: 'Specific stage to start',
+                        //defaultValue: '2.Docker'
+                        //The potential choices, one per line. The value on the first line will be the default.
+                ),
+                choiceParam(
+                        name: 'firstStage',
+                        choices: '1.Build\n' +
+                                '2.Docker\n' +
+                                '3.Deploy\n' +
+                                '4.Deploy\n' +
+                                '5.Deploy\n' +
+                                '6.Deploy\n' +
+                                '7.Deploy\n' + 
+                                '8.Deploy\n', 
+                        description: 'First stage to start',
+                        //defaultValue: '6.Deploy'
+                        //The potential choices, one per line. The value on the first line will be the default.
+                ),
+                
+                choiceParam(
+                        name: 'lastStage',
+                        choices:
+                                '8.Deploy\n' +
+                                '7.Deploy\n' +
+                                '6.Deploy\n' +
+                                '5.Deploy\n' +
+                                '4.Deploy\n' + 
+                                '3.Deploy\n' +
+                                '2.Docker\n' +
+                                '1.Build',
+                        description: 'Last stage to start',
+                        //defaultValue: '8.Deploy'
+                        //The potential choices, one per line. The value on the first line will be the default.
+                ),
+        ])
+])
+}
+}
+}
+stage('1.Build') {
+            steps {
+                script { 
+stageIf('1.Build') {
+  echo "1.Build"
+}}}}
+stage('2.Docker') {
+            steps {
+                script { 
+stageIf('2.Docker') {
+  echo "2.Build"
+}}}}
+stage('3.Deploy') {
+            steps {
+                script { 
+stageIf('3.Deploy') {
+  echo "3.Build"
+}
+}}}
+stage('4.Deploy') {
+            steps {
+                script { 
+stageIf('4.Deploy') {
+  echo "4.Build"
+}
+}
+}
+}
+stage('5.Deploy') {
+            steps {
+                script { 
+stageIf('5.Deploy') {
+  echo "5.Build"
+}
+}
+}
+}
+stage('6.Deploy') {
+            steps {
+                script { 
+stageIf('6.Deploy') {
+  echo "6.Build"
+}
+}
+}
+}
+stage('7.Deploy') {
+            steps {
+                script { 
+stageIf('7.Deploy') {
+  echo "7.Build"
+}
+}
+}
+}
+stage('8.Deploy') {
+            steps {
+                script { 
+stageIf('8.Deploy') {
+  echo "8.Build"
+}
+}
+}
+}
+}
+}
