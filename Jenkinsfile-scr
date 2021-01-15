@@ -1,0 +1,82 @@
+def stageIf(String name, Closure body) {
+if (params.specificStage == name || params.firstStage <= name && params.lastStage >= name) {
+stage(name, body)
+} else {
+stage(name) {
+echo "Stage skipped: $name"
+}
+}
+}
+
+node {
+properties([
+parameters([
+choiceParam(
+name: 'specificStage',
+choices: '1.Build\n' +
+'2.Docker\n' +
+'3.Deploy\n' +
+'4.Deploy\n' +
+'5.Deploy\n' +
+'6.Deploy\n' +
+'7.Deploy\n' +
+'8.Deploy\n',
+description: 'Specific stage to start',
+//The potential choices, one per line. The value on the first line will be the default.
+),
+choiceParam(
+name: 'firstStage',
+choices: '1.Build\n' +
+'2.Docker\n' +
+'3.Deploy\n' +
+'4.Deploy\n' +
+'5.Deploy\n' +
+'6.Deploy\n' +
+'7.Deploy\n' +
+'8.Deploy\n',
+description: 'First stage to start',
+//The potential choices, one per line. The value on the first line will be the default.
+),
+choiceParam(
+name: 'lastStage',
+choices:
+'8.Deploy\n' +
+'7.Deploy\n' +
+'6.Deploy\n' +
+'5.Deploy\n' +
+'4.Deploy\n' +
+'3.Deploy\n' +
+'2.Docker\n' +
+'1.Build',
+description: 'Last stage to start',
+//The potential choices, one per line. The value on the first line will be the default.
+),
+])
+])
+
+stageIf('1.Build') {
+echo "1.Build"
+}
+stageIf('2.Docker') {
+echo "2.Build"
+}
+stageIf('3.Deploy') {
+echo "3.Build"
+}
+stageIf('4.Deploy') {
+echo "4.Build"
+}
+stageIf('5.Deploy') {
+echo "5.Build"
+}
+stageIf('6.Deploy') {
+echo "6.Build"
+}
+stageIf('7.Deploy') {
+echo "7.Build"
+}
+stageIf('8.Deploy') {
+echo "8.Build"
+}
+
+}
